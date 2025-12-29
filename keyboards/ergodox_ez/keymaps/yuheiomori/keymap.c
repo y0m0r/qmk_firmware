@@ -3,14 +3,18 @@
 #define MAC 0   // default layer
 #define MACFN 1 // function layer
 
-// コンボ用カスタムキーコード
+// カスタムキーコード
 enum custom_keycodes {
     CB_PAREN = SAFE_RANGE,  // ()
     CB_BRACK,               // []
     CB_BRACE,               // {}
     CB_UNDER,               // _
     CB_ARROW,               // =>
+    MS_LOCK,                // マウス左クリック ロック/解除
 };
+
+// クリックロック状態
+static bool mouse_lock = false;
 
 // コンボの定義
 const uint16_t PROGMEM combo_backspace[] = {KC_S, KC_D, COMBO_END};
@@ -72,7 +76,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * | ESC    |  F1  |  F2  |  F3  |  F4  |  F5  | F6   |           | F7   |  F8  |  F9  | F10  |  F11 |  F12 |   =    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Tab    |RGBTOG|RGBMOD|RGBHUI|RGBSAI|RGBVAI|Hyper |           |Hyper |      |LClick|RClick|      |      |   -    |
+ * | Tab    |RGBTOG|RGBMOD|RGBHUI|RGBSAI|RGBVAI|Hyper |           |Hyper |DrgLck|LClick|RClick|      |      |   -    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | CTRL   |CMBTOG|DMREC1|DMRSTP|DMPLY1|      |------|           |------| M-L  | M-Dn | M-U  | M-R  |      |  '"    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
@@ -91,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [MACFN] = LAYOUT_ergodox_pretty(
     // left hand                                                                   // right hand
     KC_TRNS,      KC_F1,      KC_F2,      KC_F3,   KC_F4,   KC_F5,   KC_F6,        KC_F7,        KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_TRNS,
-    KC_TRNS,      UG_TOGG,    UG_NEXT,    UG_HUEU, UG_SATU, UG_VALU, KC_TRNS,      KC_TRNS,      KC_NO,   MS_BTN1, MS_BTN2, KC_NO,   KC_NO,   KC_TRNS,
+    KC_TRNS,      UG_TOGG,    UG_NEXT,    UG_HUEU, UG_SATU, UG_VALU, KC_TRNS,      KC_TRNS,      MS_LOCK, MS_BTN1, MS_BTN2, KC_NO,   KC_NO,   KC_TRNS,
     KC_TRNS,      CM_TOGG,    DM_REC1,    DM_RSTP, DM_PLY1,KC_NO,                                MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_NO,   KC_TRNS,
     KC_TRNS,      EE_CLR,     KC_NO,      MS_ACL0, MS_ACL1, MS_ACL2, KC_NO,        KC_NO,        MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, KC_NO,   KC_TRNS,
     KC_TRNS,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,                                               KC_TRNS, KC_NO,   KC_NO,   KC_NO,   TO(MAC),
@@ -102,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
-// カスタムキーコードの処理（文字列送信）
+// カスタムキーコードの処理
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     if (record->event.pressed) {
         switch (keycode) {
@@ -120,6 +124,17 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return false;
             case CB_ARROW:
                 SEND_STRING("=>");
+                return false;
+            case MS_LOCK:
+                // ドラッグロックのトグル (Shift+クリック押しっぱなし)
+                mouse_lock = !mouse_lock;
+                if (mouse_lock) {
+                    register_code(KC_LSFT);
+                    register_code16(MS_BTN1);
+                } else {
+                    unregister_code16(MS_BTN1);
+                    unregister_code(KC_LSFT);
+                }
                 return false;
         }
     }
