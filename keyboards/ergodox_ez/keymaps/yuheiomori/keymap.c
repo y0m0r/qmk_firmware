@@ -3,6 +3,36 @@
 #define MAC 0   // default layer
 #define MACFN 1 // function layer
 
+// コンボ用カスタムキーコード
+enum custom_keycodes {
+    CB_PAREN = SAFE_RANGE,  // ()
+    CB_BRACK,               // []
+    CB_BRACE,               // {}
+    CB_UNDER,               // _
+    CB_ARROW,               // =>
+};
+
+// コンボの定義
+const uint16_t PROGMEM combo_backspace[] = {KC_S, KC_D, COMBO_END};
+const uint16_t PROGMEM combo_enter[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_escape[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM combo_paren[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_bracket[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_brace[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_underscore[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_arrow[] = {KC_COMM, KC_DOT, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(combo_backspace, KC_BSPC),   // S + D = Backspace
+    COMBO(combo_enter, KC_ENT),        // K + L = Enter
+    COMBO(combo_escape, KC_ESC),       // J + K = Escape
+    COMBO(combo_paren, CB_PAREN),      // U + I = ()
+    COMBO(combo_bracket, CB_BRACK),    // I + O = []
+    COMBO(combo_brace, CB_BRACE),      // O + P = {}
+    COMBO(combo_underscore, CB_UNDER), // M + , = _
+    COMBO(combo_arrow, CB_ARROW),      // , + . = =>
+};
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Keymap 0: Mac
@@ -71,6 +101,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 };
+
+// カスタムキーコードの処理（文字列送信）
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (record->event.pressed) {
+        switch (keycode) {
+            case CB_PAREN:
+                SEND_STRING("()");
+                return false;
+            case CB_BRACK:
+                SEND_STRING("[]");
+                return false;
+            case CB_BRACE:
+                SEND_STRING("{}");
+                return false;
+            case CB_UNDER:
+                SEND_STRING("_");
+                return false;
+            case CB_ARROW:
+                SEND_STRING("=>");
+                return false;
+        }
+    }
+    return true;
+}
 
 // Runs just one time when the keyboard initializes.
 void keyboard_post_init_user(void) {
