@@ -144,9 +144,9 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // Runs just one time when the keyboard initializes.
 void keyboard_post_init_user(void) {
     ergodox_board_led_off();
-    ergodox_right_led_1_on();
-    ergodox_right_led_2_on();
-    ergodox_right_led_3_on();
+    ergodox_right_led_1_on();   // MACレイヤー = LED1のみ点灯
+    ergodox_right_led_2_off();
+    ergodox_right_led_3_off();
 }
 
 // Runs whenever there is a layer state change.
