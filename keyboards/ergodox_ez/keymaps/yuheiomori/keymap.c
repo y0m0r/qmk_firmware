@@ -74,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * | Tab    |RGBTOG|RGBMOD|RGBHUI|RGBSAI|RGBVAI|Hyper |           |Hyper |      |LClick|RClick|      |      |   -    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | CTRL   |      |      |      |      |      |------|           |------| M-L  | M-Dn | M-U  | M-R  |      |  '"    |
+ * | CTRL   |CMBTOG|      |      |      |      |------|           |------| M-L  | M-Dn | M-U  | M-R  |      |  '"    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | LShift |EECLR |      | SP+0 | SP+1 | SP+2 |      |           |      | WH-L | WH-U | WH_D | WH_R |      |  \     |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -92,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // left hand                                                                   // right hand
     KC_TRNS,      KC_F1,      KC_F2,      KC_F3,   KC_F4,   KC_F5,   KC_F6,        KC_F7,        KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_TRNS,
     KC_TRNS,      UG_TOGG,    UG_NEXT,    UG_HUEU, UG_SATU, UG_VALU, KC_TRNS,      KC_TRNS,      KC_NO,   MS_BTN1, MS_BTN2, KC_NO,   KC_NO,   KC_TRNS,
-    KC_TRNS,      KC_NO,      KC_NO,      KC_NO,   KC_NO,  KC_NO,                                MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_NO,   KC_TRNS,
+    KC_TRNS,      CM_TOGG,    KC_NO,      KC_NO,   KC_NO,  KC_NO,                                MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_NO,   KC_TRNS,
     KC_TRNS,      EE_CLR,     KC_NO,      MS_ACL0, MS_ACL1, MS_ACL2, KC_NO,        KC_NO,        MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, KC_NO,   KC_TRNS,
     KC_TRNS,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,                                               KC_TRNS, KC_NO,   KC_NO,   KC_NO,   TO(MAC),
                                                             KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS,
