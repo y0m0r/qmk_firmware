@@ -78,9 +78,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * | Tab    |RGBTOG|RGBMOD|RGBHUI|RGBSAI|RGBVAI|Hyper |           |Hyper |DrgLck|LClick|RClick|      |      |   -    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | CTRL   |CMBTOG|DMREC1|DMRSTP|DMPLY1|      |------|           |------| M-L  | M-Dn | M-U  | M-R  |      |  '"    |
+ * | CTRL   |CMBTOG|DMREC1|DMPLY1|DMRSTP| SP+2 |------|           |------| M-L  | M-Dn | M-U  | M-R  |      |  '"    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | LShift |EECLR |      | SP+0 | SP+1 | SP+2 |      |           |      | WH-L | WH-U | WH_D | WH_R |      |  \     |
+ * | LShift |BOOT  |DMREC2|DMPLY2| SP+0 | SP+1 |      |           |      | WH-L | WH-U | WH_D | WH_R |      |  \     |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   | cut  | paste| copy | Alt  | LGUI |                                       | RGUI |      |      |      | L0   |
  *   `----------------------------------'                                       `----------------------------------'
@@ -96,8 +96,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // left hand                                                                   // right hand
     KC_TRNS,      KC_F1,      KC_F2,      KC_F3,   KC_F4,   KC_F5,   KC_F6,        KC_F7,        KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_TRNS,
     KC_TRNS,      UG_TOGG,    UG_NEXT,    UG_HUEU, UG_SATU, UG_VALU, KC_TRNS,      KC_TRNS,      MS_LOCK, MS_BTN1, MS_BTN2, KC_NO,   KC_NO,   KC_TRNS,
-    KC_TRNS,      CM_TOGG,    DM_REC1,    DM_RSTP, DM_PLY1,KC_NO,                                MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_NO,   KC_TRNS,
-    KC_TRNS,      EE_CLR,     KC_NO,      MS_ACL0, MS_ACL1, MS_ACL2, KC_NO,        KC_NO,        MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, KC_NO,   KC_TRNS,
+    KC_TRNS,      CM_TOGG,    DM_REC1,    DM_PLY1, DM_RSTP, MS_ACL2,                                  MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_NO,   KC_TRNS,
+    KC_TRNS,      QK_BOOT,    DM_REC2,    DM_PLY2, MS_ACL0, MS_ACL1, KC_NO,        KC_NO,        MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, KC_NO,   KC_TRNS,
     KC_TRNS,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,                                               KC_TRNS, KC_NO,   KC_NO,   KC_NO,   TO(MAC),
                                                             KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS,
                                                                      KC_TRNS,      KC_TRNS,
