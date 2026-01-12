@@ -3,6 +3,10 @@
 #define MAC 0   // default layer
 #define MACFN 1 // function layer
 
+// SUPER = Ctrl + Alt + Cmd
+#define SUPER(kc)   LCAG(kc)
+#define SUPER_T(kc) LCAG_T(kc)
+
 // カスタムキーコード
 enum custom_keycodes {
     CB_PAREN = SAFE_RANGE,  // ()
@@ -46,13 +50,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * | Tab    |  Q   |   W  |   E  |   R  |   T  | Hypr |           | Hypr |   Y  |   U  |   I  |   O  |   P  |   -    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | CTRL   |  A   |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |  K   |   L  |   ;  | '"     |
- * |--------+------+------+------+------+------| LFn  |           | LFn  |------+------+------+------+------+--------|
+ * |--------+------+------+------+------+------|SUPER |           |SUPER |------+------+------+------+------+--------|
  * | LShift |  Z   |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |  /   |  \     |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   | cut  | paste| copy | Alt  | LGUI |                                       | RGUI | RCTL | [    | ]    |  L1  |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        | BTN4 | BTN5 |       | left |right |
+ *                                        | SP+1 | LFn |       | left |right |
  *                                 ,------|------|------|       |------+--------+------.
  *                                 |      |      | PgUp |       | Up   |        |      |
  *                                 |Space |Back  |----- |       |----- | RClick |Enter |
@@ -60,15 +64,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                                 `--------------------'       `----------------------'
  */
 [MAC] = LAYOUT_ergodox_pretty(
-    // left hand                                                                   // right hand
-    KC_ESC,       KC_1,       KC_2,       KC_3,    KC_4,    KC_5,    KC_GRV,       KC_GRV,       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_EQL,
-    KC_TAB,       KC_Q,       KC_W,       KC_E,    KC_R,    KC_T,    HYPR_T(KC_NO),HYPR_T(KC_NO),KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
-    KC_LCTL,      KC_A,       KC_S,       KC_D,    KC_F,    KC_G,                                KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT,      KC_Z,       KC_X,       KC_C,    KC_V,    KC_B,    MO(MACFN),    MO(MACFN),    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
-    LGUI(KC_X),   LGUI(KC_V), LGUI(KC_C), KC_LALT, KC_LGUI,                                               KC_RGUI, KC_RCTL, KC_LBRC, KC_RBRC, TO(MACFN),
-                                                            MS_BTN4, MS_BTN5,      KC_LEFT, KC_RGHT,
-                                                                     KC_PGUP,      KC_UP,
-                                                   KC_SPC,  KC_BSPC, KC_PGDN,      KC_DOWN, MS_BTN2, KC_ENT
+    // left hand                                                                        // right hand
+    KC_ESC,       KC_1,       KC_2,       KC_3,    KC_4,    KC_5,    KC_GRV,            KC_GRV,          KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_EQL,
+    KC_TAB,       KC_Q,       KC_W,       KC_E,    KC_R,    KC_T,    HYPR_T(KC_NO),     HYPR_T(KC_NO),   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
+    KC_LCTL,      KC_A,       KC_S,       KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+    KC_LSFT,      KC_Z,       KC_X,       KC_C,    KC_V,    KC_B,    SUPER_T(KC_NO),    SUPER_T(KC_NO),  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
+    LGUI(KC_X),   LGUI(KC_V), LGUI(KC_C), KC_LALT, KC_LGUI,                                              KC_RGUI, KC_RCTL, KC_LBRC, KC_RBRC, TO(MACFN),
+                                                            MS_ACL1, MO(MACFN),           KC_LEFT, KC_RGHT,
+                                                                     KC_PGUP,           KC_UP,
+                                                   KC_SPC,  KC_BSPC, KC_PGDN,           KC_DOWN, MS_BTN2, KC_ENT
 ),
 
 /* Keymap 1: Mac function Layer
@@ -78,14 +82,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * | Tab    |RGBTOG|RGBMOD|RGBHUI|RGBSAI|RGBVAI|Hyper |           |Hyper |DrgLck|LClick|RClick|      |      |   -    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | CTRL   |CMBTOG|DMREC1|DMPLY1|DMRSTP| SP+2 |------|           |------| M-L  | M-Dn | M-U  | M-R  |      |  '"    |
- * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * | LShift |BOOT  |DMREC2|DMPLY2| SP+0 | SP+1 |      |           |      | WH-L | WH-U | WH_D | WH_R |      |  \     |
+ * | CTRL   |CMBTOG|DMREC1|DMPLY1|DMRSTP|      |------|           |------| M-L  | M-Dn | M-U  | M-R  |      |  '"    |
+ * |--------+------+------+------+------+------|SUPER |           |SUPER |------+------+------+------+------+--------|
+ * | LShift |BOOT  |DMREC2|DMPLY2|      |      |      |           |      | WH-L | WH-U | WH_D | WH_R |      |  \     |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   | cut  | paste| copy | Alt  | LGUI |                                       | RGUI |      |      |      | L0   |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
- *                                        | BTN4 | BTN5 |       | left |right |
+ *                                        | SP+1 | LFn  |       | left |right |
  *                                 ,------|------|------|       |------+------+------.
  *                                 |      |      | PgUp |       | Up   |      |      |
  *                                 |Space |Back  |------|       |------|RClick|Enter |
@@ -96,8 +100,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     // left hand                                                                   // right hand
     KC_TRNS,      KC_F1,      KC_F2,      KC_F3,   KC_F4,   KC_F5,   KC_F6,        KC_F7,        KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_TRNS,
     KC_TRNS,      UG_TOGG,    UG_NEXT,    UG_HUEU, UG_SATU, UG_VALU, KC_TRNS,      KC_TRNS,      MS_LOCK, MS_BTN1, MS_BTN2, KC_NO,   KC_NO,   KC_TRNS,
-    KC_TRNS,      CM_TOGG,    DM_REC1,    DM_PLY1, DM_RSTP, MS_ACL2,                                  MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_NO,   KC_TRNS,
-    KC_TRNS,      QK_BOOT,    DM_REC2,    DM_PLY2, MS_ACL0, MS_ACL1, KC_NO,        KC_NO,        MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, KC_NO,   KC_TRNS,
+    KC_TRNS,      CM_TOGG,    DM_REC1,    DM_PLY1, DM_RSTP, KC_NO,                                  MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_NO,   KC_TRNS,
+    KC_TRNS,      QK_BOOT,    DM_REC2,    DM_PLY2, KC_NO,   KC_NO,   KC_NO,        KC_NO,        MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, KC_NO,   KC_TRNS,
     KC_TRNS,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,                                               KC_TRNS, KC_NO,   KC_NO,   KC_NO,   TO(MAC),
                                                             KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS,
                                                                      KC_TRNS,      KC_TRNS,
