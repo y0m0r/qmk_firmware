@@ -4,9 +4,10 @@
 
 | コンボ | 出力 | 用途 |
 |--------|------|------|
-| S + D | Backspace | 削除 |
-| K + L | Enter | 改行 |
-| J + K | Escape | エスケープ |
+| J + K | SUPER (Ctrl+Alt+Cmd) | 修飾キー |
+| F + D | SUPER (Ctrl+Alt+Cmd) | 修飾キー |
+| K + L | Hyper (Ctrl+Alt+Cmd+Shift) | 修飾キー |
+| D + S | Hyper (Ctrl+Alt+Cmd+Shift) | 修飾キー |
 
 ## ダイナミックマクロ (Fn + )
 

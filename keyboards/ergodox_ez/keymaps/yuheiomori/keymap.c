@@ -10,20 +10,24 @@
 // カスタムキーコード
 enum custom_keycodes {
     MS_LOCK = SAFE_RANGE,   // マウス左クリック ロック/解除
+    CB_SUPER,               // Ctrl+Alt+Cmd (コンボ用)
+    CB_HYPER,               // Ctrl+Alt+Cmd+Shift (コンボ用)
 };
 
 // クリックロック状態
 static bool mouse_lock = false;
 
 // コンボの定義
-const uint16_t PROGMEM combo_backspace[] = {KC_S, KC_D, COMBO_END};
-const uint16_t PROGMEM combo_enter[] = {KC_K, KC_L, COMBO_END};
-const uint16_t PROGMEM combo_escape[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM combo_super_jk[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM combo_super_fd[] = {KC_F, KC_D, COMBO_END};
+const uint16_t PROGMEM combo_hyper_kl[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_hyper_ds[] = {KC_D, KC_S, COMBO_END};
 
 combo_t key_combos[] = {
-    COMBO(combo_backspace, KC_BSPC),   // S + D = Backspace
-    COMBO(combo_enter, KC_ENT),        // K + L = Enter
-    COMBO(combo_escape, KC_ESC),       // J + K = Escape
+    COMBO(combo_super_jk, CB_SUPER),   // J + K = SUPER (Ctrl+Alt+Cmd)
+    COMBO(combo_super_fd, CB_SUPER),   // F + D = SUPER (Ctrl+Alt+Cmd)
+    COMBO(combo_hyper_kl, CB_HYPER),   // K + L = Hyper (Ctrl+Alt+Cmd+Shift)
+    COMBO(combo_hyper_ds, CB_HYPER),   // D + S = Hyper (Ctrl+Alt+Cmd+Shift)
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -96,9 +100,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 // カスタムキーコードの処理
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-        switch (keycode) {
-            case MS_LOCK:
+    switch (keycode) {
+        case MS_LOCK:
+            if (record->event.pressed) {
                 // ドラッグロックのトグル (Shift+クリック押しっぱなし)
                 mouse_lock = !mouse_lock;
                 if (mouse_lock) {
@@ -108,8 +112,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     unregister_code16(MS_BTN1);
                     unregister_code(KC_LSFT);
                 }
-                return false;
-        }
+            }
+            return false;
+        case CB_SUPER:
+            // SUPER = Ctrl+Alt+Cmd
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                register_code(KC_LALT);
+                register_code(KC_LGUI);
+            } else {
+                unregister_code(KC_LGUI);
+                unregister_code(KC_LALT);
+                unregister_code(KC_LCTL);
+            }
+            return false;
+        case CB_HYPER:
+            // Hyper = Ctrl+Alt+Cmd+Shift
+            if (record->event.pressed) {
+                register_code(KC_LCTL);
+                register_code(KC_LALT);
+                register_code(KC_LGUI);
+                register_code(KC_LSFT);
+            } else {
+                unregister_code(KC_LSFT);
+                unregister_code(KC_LGUI);
+                unregister_code(KC_LALT);
+                unregister_code(KC_LCTL);
+            }
+            return false;
     }
     return true;
 }
