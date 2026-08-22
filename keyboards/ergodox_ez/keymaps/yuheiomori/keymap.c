@@ -4,14 +4,11 @@
 #define MACFN 1 // function layer
 
 // SUPER = Ctrl + Alt + Cmd
-#define SUPER(kc)   LCAG(kc)
-#define SUPER_T(kc) LCAG_T(kc)
+#define SUPER(kc) LCAG(kc)
 
 // カスタムキーコード
 enum custom_keycodes {
     MS_LOCK = SAFE_RANGE,   // マウス左クリック ロック/解除
-    CB_SUPER,               // Ctrl+Alt+Cmd (コンボ用)
-    CB_HYPER,               // Ctrl+Alt+Cmd+Shift (コンボ用)
 };
 
 // クリックロック状態
@@ -24,10 +21,10 @@ const uint16_t PROGMEM combo_hyper_kl[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_hyper_ds[] = {KC_D, KC_S, COMBO_END};
 
 combo_t key_combos[] = {
-    COMBO(combo_super_jk, CB_SUPER),   // J + K = SUPER (Ctrl+Alt+Cmd)
-    COMBO(combo_super_fd, CB_SUPER),   // F + D = SUPER (Ctrl+Alt+Cmd)
-    COMBO(combo_hyper_kl, CB_HYPER),   // K + L = Hyper (Ctrl+Alt+Cmd+Shift)
-    COMBO(combo_hyper_ds, CB_HYPER),   // D + S = Hyper (Ctrl+Alt+Cmd+Shift)
+    COMBO(combo_super_jk, SUPER(KC_NO)),   // J + K = SUPER (Ctrl+Alt+Cmd)
+    COMBO(combo_super_fd, SUPER(KC_NO)),   // F + D = SUPER (Ctrl+Alt+Cmd)
+    COMBO(combo_hyper_kl, KC_HYPR),        // K + L = Hyper (Ctrl+Alt+Cmd+Shift)
+    COMBO(combo_hyper_ds, KC_HYPR),        // D + S = Hyper (Ctrl+Alt+Cmd+Shift)
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -55,9 +52,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [MAC] = LAYOUT_ergodox_pretty(
     // left hand                                                                        // right hand
     KC_ESC,       KC_1,       KC_2,       KC_3,    KC_4,    KC_5,    KC_GRV,            KC_GRV,          KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_EQL,
-    KC_TAB,       KC_Q,       KC_W,       KC_E,    KC_R,    KC_T,    HYPR_T(KC_NO),     HYPR_T(KC_NO),   KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
+    KC_TAB,       KC_Q,       KC_W,       KC_E,    KC_R,    KC_T,    KC_HYPR,           KC_HYPR,         KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
     KC_LCTL,      KC_A,       KC_S,       KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT,      KC_Z,       KC_X,       KC_C,    KC_V,    KC_B,    SUPER_T(KC_NO),    SUPER_T(KC_NO),  KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
+    KC_LSFT,      KC_Z,       KC_X,       KC_C,    KC_V,    KC_B,    SUPER(KC_NO),      SUPER(KC_NO),    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
     LGUI(KC_X),   LGUI(KC_V), LGUI(KC_C), KC_LALT, KC_LGUI,                                              KC_RGUI, KC_RCTL, KC_LBRC, KC_RBRC, TO(MACFN),
                                                             MS_ACL1, MO(MACFN),           KC_LEFT, KC_RGHT,
                                                                      KC_PGUP,           KC_UP,
@@ -112,32 +109,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     unregister_code16(MS_BTN1);
                     unregister_code(KC_LSFT);
                 }
-            }
-            return false;
-        case CB_SUPER:
-            // SUPER = Ctrl+Alt+Cmd
-            if (record->event.pressed) {
-                register_code(KC_LCTL);
-                register_code(KC_LALT);
-                register_code(KC_LGUI);
-            } else {
-                unregister_code(KC_LGUI);
-                unregister_code(KC_LALT);
-                unregister_code(KC_LCTL);
-            }
-            return false;
-        case CB_HYPER:
-            // Hyper = Ctrl+Alt+Cmd+Shift
-            if (record->event.pressed) {
-                register_code(KC_LCTL);
-                register_code(KC_LALT);
-                register_code(KC_LGUI);
-                register_code(KC_LSFT);
-            } else {
-                unregister_code(KC_LSFT);
-                unregister_code(KC_LGUI);
-                unregister_code(KC_LALT);
-                unregister_code(KC_LCTL);
             }
             return false;
     }
