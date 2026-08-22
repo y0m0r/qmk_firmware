@@ -50,6 +50,61 @@
 
 ## ビルド方法
 
+実機は **shine**（単色バックライト）。base / glow ではないので注意。
+
 ```bash
 make ergodox_ez/shine:yuheiomori
+# qmk CLI で書くと同じ意味
+qmk compile -kb ergodox_ez/shine -km yuheiomori
 ```
+
+生成物はリポジトリ直下の `ergodox_ez_shine_yuheiomori.hex`。
+
+2026-08-22 時点のサイズは 26058 / 32256 バイト（80%、空き 6198 バイト）。
+atmega32u4 の容量が 32256 バイトなので、機能を足していく余地はあまり大きくない。
+
+## 書き込み (flash)
+
+普段は **Teensy Loader の GUI**（`/Applications/Teensy.app`）を使っている。
+
+1. 先に上のビルドコマンドで `ergodox_ez_shine_yuheiomori.hex` を作る
+2. Teensy.app を起動する
+3. File > Open HEX File でリポジトリ直下の `ergodox_ez_shine_yuheiomori.hex` を選ぶ
+4. キーボードで **Fn + Z** を押してブートローダに入る
+   （MACFN レイヤーの Z の位置に `QK_BOOT` を割り当て済み。Fn は左手親指）
+5. Teensy.app の Program ボタン（下向き矢印）で書き込み、Reboot で再起動
+
+ブートローダは HalfKay（Teensy 2.0 系）。詳細は `docs/flashing.md` の HalfKay の節。
+
+### コマンドラインで焼く場合
+
+`make ... :flash` や `qmk flash` でも焼けるが、これらは `teensy_loader_cli` を呼ぶ。
+**2026-08-22 時点でこのマシンには未インストール**なので、使うなら先に入れること。
+GUI で困っていないなら無理に入れる必要はない。
+
+```bash
+brew install teensy_loader_cli
+make ergodox_ez/shine:yuheiomori:flash
+# qmk CLI で書くと同じ意味
+qmk flash -kb ergodox_ez/shine -km yuheiomori
+```
+
+コマンド実行後に `Waiting for bootloader...` が出たら Fn + Z を押す。
+ブートローダに入ってから **7秒以内** に書き込みが始まる必要がある。
+
+## 本家 (qmk/qmk_firmware) との同期
+
+このリポジトリは qmk/qmk_firmware のフォーク。本家の更新を取り込む手順:
+
+```bash
+git fetch upstream
+git merge upstream/master
+git push origin master
+git submodule update --init --recursive
+```
+
+GitHub の画面にある `Sync fork` ボタンでも同じことができるが、隣の
+`Discard N commits` を押すと自分のキーマップ変更が消えるので、
+ローカルでやるほうが安全。
+
+`Contribute` ボタンは本家への PR 作成用なので、このリポジトリでは使わない。
