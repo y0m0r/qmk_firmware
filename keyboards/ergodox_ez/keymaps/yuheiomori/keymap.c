@@ -143,18 +143,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 // カスタムキーコードの処理
+// ドラッグロックを解除する。既に解除済みなら何もしない。
+static void mouse_lock_release(void) {
+    if (!mouse_lock) {
+        return;
+    }
+    mouse_lock = false;
+    unregister_code16(MS_BTN1);
+    unregister_code(KC_LSFT);
+}
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case MS_LOCK:
             if (record->event.pressed) {
                 // ドラッグロックのトグル (Shift+クリック押しっぱなし)
-                mouse_lock = !mouse_lock;
                 if (mouse_lock) {
+                    mouse_lock_release();
+                } else {
+                    mouse_lock = true;
                     register_code(KC_LSFT);
                     register_code16(MS_BTN1);
-                } else {
-                    unregister_code16(MS_BTN1);
-                    unregister_code(KC_LSFT);
                 }
             }
             return false;
@@ -178,6 +187,16 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     ergodox_right_led_3_off();
 
     uint8_t layer = get_highest_layer(state);
+
+    // 通常レイヤーに戻ったらドラッグロックを解除する。
+    // 解除は MACFN の Y を押すしかないため、ロックしたままレイヤーを
+    // 抜けると Shift が押されっぱなしのまま気づけない。
+    // マウスキーは MACFN 上にあるので、レイヤーを抜けた時点で
+    // ドラッグは終わっているとみなしてよい。
+    if (layer == MAC) {
+        mouse_lock_release();
+    }
+
     switch (layer) {
         case MAC:
             ergodox_right_led_1_on();
