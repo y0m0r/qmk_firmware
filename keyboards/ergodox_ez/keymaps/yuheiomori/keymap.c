@@ -4,8 +4,15 @@
 #define MACFN 1 // function layer
 #define FKEY 2  // F1-F12 layer (右手内側の下段キーで保持)
 
-// SUPER = Ctrl + Alt + Cmd
+// SUPER = Ctrl + Alt + Cmd (コンボの出力に使う)
 #define SUPER(kc) LCAG(kc)
+
+// 内側の大きなキー4つは全てレイヤー保持キーにしている。
+// 上段が MACFN、下段が FKEY で、どちらも左右両方にある。
+// 「保持する手」と「操作する手」を必ず分けられるようにするため。
+//   例: 左手で FKEY を保持 -> 右手で音量・メディア操作
+//       右手で FKEY を保持 -> 左手で F1-F12
+// 修飾キー(Hyper/SUPER)は専用キーを廃止し、コンボに一本化した。
 
 // カスタムキーコード
 enum custom_keycodes {
@@ -34,10 +41,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * | ESC    |  1   |   2  |   3  |   4  |   5  | `~   |           | `~   |   6  |   7  |   8  |   9  |   0  |   =    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Tab    |  Q   |   W  |   E  |   R  |   T  | Hypr |           |SUPER |   Y  |   U  |   I  |   O  |   P  |   -    |
+ * | Tab    |  Q   |   W  |   E  |   R  |   T  |MACFN |           |MACFN |   Y  |   U  |   I  |   O  |   P  |   -    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | CTRL   |  A   |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |  K   |   L  |   ;  | '"     |
- * |--------+------+------+------+------+------|SUPER |           | FKEY |------+------+------+------+------+--------|
+ * |--------+------+------+------+------+------| FKEY |           | FKEY |------+------+------+------+------+--------|
  * | LShift |  Z   |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |  /   |  \     |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   | cut  | paste| copy | Alt  | LGUI |                                       | RGUI | RCTL | [    | ]    |  L1  |
@@ -53,9 +60,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [MAC] = LAYOUT_ergodox_pretty(
     // left hand                                                                        // right hand
     KC_ESC,       KC_1,       KC_2,       KC_3,    KC_4,    KC_5,    KC_GRV,            KC_GRV,          KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_EQL,
-    KC_TAB,       KC_Q,       KC_W,       KC_E,    KC_R,    KC_T,    KC_HYPR,           SUPER(KC_NO),    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
+    KC_TAB,       KC_Q,       KC_W,       KC_E,    KC_R,    KC_T,    MO(MACFN),         MO(MACFN),       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
     KC_LCTL,      KC_A,       KC_S,       KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-    KC_LSFT,      KC_Z,       KC_X,       KC_C,    KC_V,    KC_B,    SUPER(KC_NO),      MO(FKEY),        KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
+    KC_LSFT,      KC_Z,       KC_X,       KC_C,    KC_V,    KC_B,    MO(FKEY),          MO(FKEY),        KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
     LGUI(KC_X),   LGUI(KC_V), LGUI(KC_C), KC_LALT, KC_LGUI,                                              KC_RGUI, KC_RCTL, KC_LBRC, KC_RBRC, TO(MACFN),
                                                             MS_ACL1, MO(MACFN),           KC_LEFT, KC_RGHT,
                                                                      KC_PGUP,           KC_UP,
