@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | CTRL   |CMBTOG|DMREC1|DMPLY1|DMRSTP|      |------|           |------| M-L  | M-Dn | M-U  | M-R  |      |  '"    |
  * |--------+------+------+------+------+------|SUPER |           |SUPER |------+------+------+------+------+--------|
- * | LShift |BOOT  |DMREC2|DMPLY2|      |      |      |           |      | WH-L | WH-U | WH_D | WH_R |      |  \     |
+ * | LShift |      |DMREC2|DMPLY2|      |      |      |           |      | WH-L | WH-U | WH_D | WH_R |      |  \     |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
  *   | cut  | paste| copy | Alt  | LGUI |                                       | RGUI |      |      |      | L0   |
  *   `----------------------------------'                                       `----------------------------------'
@@ -87,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS,      KC_F1,      KC_F2,      KC_F3,   KC_F4,   KC_F5,   KC_F6,        KC_F7,        KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_TRNS,
     KC_TRNS,      UG_TOGG,    UG_NEXT,    UG_HUEU, UG_SATU, UG_VALU, KC_TRNS,      KC_TRNS,      MS_LOCK, MS_BTN1, MS_BTN2, KC_NO,   KC_NO,   KC_TRNS,
     KC_TRNS,      CM_TOGG,    DM_REC1,    DM_PLY1, DM_RSTP, KC_NO,                                  MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_NO,   KC_TRNS,
-    KC_TRNS,      QK_BOOT,    DM_REC2,    DM_PLY2, KC_NO,   KC_NO,   KC_NO,        KC_NO,        MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, KC_NO,   KC_TRNS,
+    KC_TRNS,      KC_NO,      DM_REC2,    DM_PLY2, KC_NO,   KC_NO,   KC_NO,        KC_NO,        MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, KC_NO,   KC_TRNS,
     KC_TRNS,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,                                               KC_TRNS, KC_NO,   KC_NO,   KC_NO,   TO(MAC),
                                                             KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS,
                                                                      KC_TRNS,      KC_TRNS,
@@ -98,8 +98,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * 左手をホームポジションから動かさずに F1-F12 を打つためのレイヤー。
  * 最上段まで手を伸ばす必要をなくすのが目的。
  *
+ * QK_BOOT はここに置いている。このレイヤーは MO だけでトグルがないため、
+ * 内側キーを意図的に押さえていない限り発火しない。
+ *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
- * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+ * | BOOT   |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
  * |        | F11  | F12  |      |      |      |      |           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
@@ -119,7 +122,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [FKEY] = LAYOUT_ergodox_pretty(
     // left hand                                                                   // right hand
-    KC_TRNS,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    QK_BOOT,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
     KC_TRNS,      KC_F11,     KC_F12,     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
     KC_TRNS,      KC_F1,      KC_F2,      KC_F3,   KC_F4,   KC_F5,                               KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
     KC_TRNS,      KC_F6,      KC_F7,      KC_F8,   KC_F9,   KC_F10,  KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,

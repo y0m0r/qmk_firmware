@@ -28,7 +28,6 @@
 | キー | 機能 |
 |------|------|
 | Fn + A | コンボ ON/OFF (CM_TOGG) |
-| Fn + Z | ブートローダ起動 (QK_BOOT) — 書き込み時に使う |
 
 ## F キー (右手内側の下段キーを押しながら)
 
@@ -92,8 +91,8 @@ atmega32u4 の容量が 32256 バイトなので、機能を足していく余�
 1. 先に上のビルドコマンドで `ergodox_ez_shine_yuheiomori.hex` を作る
 2. Teensy.app を起動する
 3. File > Open HEX File でリポジトリ直下の `ergodox_ez_shine_yuheiomori.hex` を選ぶ
-4. キーボードで **Fn + Z** を押してブートローダに入る
-   （MACFN レイヤーの Z の位置に `QK_BOOT` を割り当て済み。Fn は左手親指）
+4. キーボードで **内側の下段キー(N の隣) + ESC** を押してブートローダに入る
+   （FKEY レイヤーの ESC の位置に `QK_BOOT` を割り当て済み）
 5. Teensy.app の Program ボタン（下向き矢印）で書き込み、Reboot で再起動
 
 ブートローダは HalfKay（Teensy 2.0 系）。詳細は `docs/flashing.md` の HalfKay の節。
@@ -111,7 +110,8 @@ make ergodox_ez/shine:yuheiomori:flash
 qmk flash -kb ergodox_ez/shine -km yuheiomori
 ```
 
-コマンド実行後に `Waiting for bootloader...` が出たら Fn + Z を押す。
+コマンド実行後に `Waiting for bootloader...` が出たら
+内側の下段キー + ESC を押す。
 ブートローダに入ってから **7秒以内** に書き込みが始まる必要がある。
 
 ## 本家 (qmk/qmk_firmware) との同期
