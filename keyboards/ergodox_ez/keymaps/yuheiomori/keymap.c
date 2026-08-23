@@ -97,6 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *
  * 左手をホームポジションから動かさずに F1-F12 を打つためのレイヤー。
  * 最上段まで手を伸ばす必要をなくすのが目的。
+ * 右手側は音量・輝度・メディア操作に使っている。
  *
  * QK_BOOT はここに置いている。このレイヤーは MO だけでトグルがないため、
  * 内側キーを意図的に押さえていない限り発火しない。
@@ -104,9 +105,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * | BOOT   |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * |        | F11  | F12  |      |      |      |      |           |      |      |      |      |      |      |        |
+ * |        | F11  | F12  |      |      |      |      |           |      | 輝度-| 輝度+| 音量-| 音量+| ミュト|        |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
- * |        |  F1  |  F2  |  F3  |  F4  |  F5  |------|           |------|      |      |      |      |      |        |
+ * |        |  F1  |  F2  |  F3  |  F4  |  F5  |------|           |------| 前曲 | 再生 | 次曲 |      |      |        |
  * |--------+------+------+------+------+------|      |           | FKEY |------+------+------+------+------+--------|
  * |        |  F6  |  F7  |  F8  |  F9  | F10  |      |           |(保持)|      |      |      |      |      |        |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -123,8 +124,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [FKEY] = LAYOUT_ergodox_pretty(
     // left hand                                                                   // right hand
     QK_BOOT,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-    KC_TRNS,      KC_F11,     KC_F12,     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-    KC_TRNS,      KC_F1,      KC_F2,      KC_F3,   KC_F4,   KC_F5,                               KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_TRNS,      KC_F11,     KC_F12,     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,      KC_TRNS,      KC_BRID, KC_BRIU, KC_VOLD, KC_VOLU, KC_MUTE, KC_TRNS,
+    KC_TRNS,      KC_F1,      KC_F2,      KC_F3,   KC_F4,   KC_F5,                               KC_MPRV, KC_MPLY, KC_MNXT, KC_TRNS, KC_TRNS, KC_TRNS,
     KC_TRNS,      KC_F6,      KC_F7,      KC_F8,   KC_F9,   KC_F10,  KC_TRNS,      KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
     KC_TRNS,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,                                               KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
                                                             KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS,
