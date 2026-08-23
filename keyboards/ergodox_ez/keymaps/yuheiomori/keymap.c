@@ -2,7 +2,7 @@
 
 #define MAC 0   // default layer
 #define MACFN 1 // function layer
-#define FKEY 2  // F1-F12 layer (右手内側の下段キーで保持)
+#define FKEY 2  // F1-F12 / メディア layer (内側の下段キーで保持)
 
 // SUPER = Ctrl + Alt + Cmd (コンボの出力に使う)
 #define SUPER(kc) LCAG(kc)
@@ -47,7 +47,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |--------+------+------+------+------+------| FKEY |           | FKEY |------+------+------+------+------+--------|
  * | LShift |  Z   |   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |  /   |  \     |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | cut  | paste| copy | Alt  | LGUI |                                       | RGUI | RCTL | [    | ]    |  L1  |
+ *   | cut  | paste| copy | Alt  | LGUI |                                       | RGUI | RCTL | [    | ]    |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | SP+1 | LFn |       | left |right |
@@ -63,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TAB,       KC_Q,       KC_W,       KC_E,    KC_R,    KC_T,    MO(MACFN),         MO(MACFN),       KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
     KC_LCTL,      KC_A,       KC_S,       KC_D,    KC_F,    KC_G,                                        KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
     KC_LSFT,      KC_Z,       KC_X,       KC_C,    KC_V,    KC_B,    MO(FKEY),          MO(FKEY),        KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_BSLS,
-    LGUI(KC_X),   LGUI(KC_V), LGUI(KC_C), KC_LALT, KC_LGUI,                                              KC_RGUI, KC_RCTL, KC_LBRC, KC_RBRC, TO(MACFN),
+    LGUI(KC_X),   LGUI(KC_V), LGUI(KC_C), KC_LALT, KC_LGUI,                                              KC_RGUI, KC_RCTL, KC_LBRC, KC_RBRC, KC_NO,
                                                             MS_ACL1, MO(MACFN),           KC_LEFT, KC_RGHT,
                                                                      KC_PGUP,           KC_UP,
                                                    KC_SPC,  KC_BSPC, KC_PGDN,           KC_DOWN, MS_BTN2, KC_ENT
@@ -73,13 +73,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * | ESC    |  F1  |  F2  |  F3  |  F4  |  F5  | F6   |           | F7   |  F8  |  F9  | F10  |  F11 |  F12 |   =    |
  * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
- * | Tab    |RGBTOG|RGBMOD|RGBHUI|RGBSAI|RGBVAI|Hyper |           |Hyper |DrgLck|LClick|RClick|      |      |   -    |
+ * | Tab    |RGBTOG|RGBMOD|RGBHUI|RGBSAI|RGBVAI|(保持)|           |(保持)|DrgLck|LClick|RClick|      |      |   -    |
  * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | CTRL   |CMBTOG|DMREC1|DMPLY1|DMRSTP|      |------|           |------| M-L  | M-Dn | M-U  | M-R  |      |  '"    |
- * |--------+------+------+------+------+------|SUPER |           |SUPER |------+------+------+------+------+--------|
+ * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
  * | LShift |      |DMREC2|DMPLY2|      |      |      |           |      | WH-L | WH-U | WH_D | WH_R |      |  \     |
  * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
- *   | cut  | paste| copy | Alt  | LGUI |                                       | RGUI |      |      |      | L0   |
+ *   | cut  | paste| copy | Alt  | LGUI |                                       | RGUI |      |      |      |      |
  *   `----------------------------------'                                       `----------------------------------'
  *                                        ,-------------.       ,-------------.
  *                                        | SP+1 | LFn  |       | left |right |
@@ -95,12 +95,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_TRNS,      UG_TOGG,    UG_NEXT,    UG_HUEU, UG_SATU, UG_VALU, KC_TRNS,      KC_TRNS,      MS_LOCK, MS_BTN1, MS_BTN2, KC_NO,   KC_NO,   KC_TRNS,
     KC_TRNS,      CM_TOGG,    DM_REC1,    DM_PLY1, DM_RSTP, KC_NO,                                  MS_LEFT, MS_DOWN, MS_UP,   MS_RGHT, KC_NO,   KC_TRNS,
     KC_TRNS,      KC_NO,      DM_REC2,    DM_PLY2, KC_NO,   KC_NO,   KC_NO,        KC_NO,        MS_WHLL, MS_WHLU, MS_WHLD, MS_WHLR, KC_NO,   KC_TRNS,
-    KC_TRNS,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,                                               KC_TRNS, KC_NO,   KC_NO,   KC_NO,   TO(MAC),
+    KC_TRNS,      KC_TRNS,    KC_TRNS,    KC_TRNS, KC_TRNS,                                               KC_TRNS, KC_NO,   KC_NO,   KC_NO,   KC_NO,
                                                             KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS,
                                                                      KC_TRNS,      KC_TRNS,
                                                    KC_TRNS, KC_TRNS, KC_TRNS,      KC_TRNS, KC_TRNS, KC_TRNS
 ),
-/* Keymap 2: F key Layer (右手内側の下段キーを押している間だけ有効)
+/* Keymap 2: F key Layer (内側の下段キーを押している間だけ有効。左右どちらでも)
  *
  * 左手をホームポジションから動かさずに F1-F12 を打つためのレイヤー。
  * 最上段まで手を伸ばす必要をなくすのが目的。
@@ -108,6 +108,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *
  * QK_BOOT はここに置いている。このレイヤーは MO だけでトグルがないため、
  * 内側キーを意図的に押さえていない限り発火しない。
+ *
+ * ブートローダ起動: 内側の下段キー + ESC
  *
  * ,--------------------------------------------------.           ,--------------------------------------------------.
  * | BOOT   |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
